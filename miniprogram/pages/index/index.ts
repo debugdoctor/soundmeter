@@ -1,10 +1,8 @@
 // index.ts
 // 获取应用实例
-const app = getApp<IAppOption>()
 const recorderManager = wx.getRecorderManager()
 const fs = wx.getFileSystemManager()
-var base = require('../../base.js'); 
-const _ = base._; 
+import {translate} from '../../utils/language'
 let level:Array<string>=[]
 
 let options = {
@@ -13,25 +11,25 @@ let options = {
   numberOfChannels: 2 as any,
   encodeBitRate: 24000 ,
   format: 'PCM' as any,
-  frameSize: 46.560+46.560/4
+  frameSize: 45
 }
 
 let options2 = {
   duration:600000 as any,
-  sampleRate: 12000 as any,
+  sampleRate: 16000 as any,
   numberOfChannels: 2 as any,
   encodeBitRate: 24000 ,
   format: 'PCM' as any,
-  frameSize: 46.560/8*5
+  frameSize: 80
 }
 
 let options3 = {
   duration:600000 as any,
-  sampleRate: 12000 as any,
+  sampleRate: 16000 as any,
   numberOfChannels: 2 as any,
   encodeBitRate: 24000 ,
   format: 'PCM' as any,
-  frameSize: 46.560/2*3
+  frameSize: 80
 }
 
 function audio2db (buffer_ori:ArrayBuffer,size:any):string{
@@ -65,7 +63,7 @@ Page({
     mutex:false, // start and stop mutex
     isout:false, // is slow or fast every result has been displayed
     buffer:new ArrayBuffer(0), //buffer for level
-    duration:5000,
+    interval:5000,
 
     translator:{},
 
@@ -97,12 +95,13 @@ Page({
     bindKeyInput: function (e: { detail: { value: any } }) {
       if(e.detail.value<3000){
         this.setData({
-          inputValue: 5000
+          interval: 5000
+        })
+      }else{
+      this.setData({
+        interval: e.detail.value
         })
       }
-      this.setData({
-        inputValue: e.detail.value
-      })
     },
     
 
@@ -170,7 +169,7 @@ Page({
   /* translation */
   langOnLoad: function () {
     this.setData({
-      translator: base._t(), 
+      translator: translate(), 
     });
   },
 
@@ -200,7 +199,7 @@ Page({
         if(this.data.mutex==false){
           level=[]
           console.info("start fast",options2.frameSize)
-          this.startInter(options2,625,this.data.duration)
+          this.startInter(options2,625,this.data.interval)
           this.setData({
             button1:'Stop',
             mutex:true,
@@ -219,7 +218,7 @@ Page({
         if(this.data.mutex==false){
           level=[]
           console.info("start slow")
-          this.startInter(options3,1500,this.data.duration)
+          this.startInter(options3,1500,this.data.interval)
           this.setData({
             button1:'Stop',
             mutex:true,
@@ -260,7 +259,7 @@ Page({
   filesaving(){
     fs.writeFile({
       filePath: `${wx.env.USER_DATA_PATH}/test.csv`,
-      data: arr2str(level,this.data.duration),
+      data: arr2str(level,this.data.interval),
       encoding: 'utf8',
       success(res) {
         console.log(res)

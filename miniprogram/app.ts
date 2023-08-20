@@ -14,5 +14,12 @@ App<IAppOption>({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       },
     })
+
+    wx.setEnableDebug({
+      enableDebug: false
+    })
+
+    
+
   },
 })

@@ -1,24 +1,24 @@
 <!--index.wxml-->
-<view class="container" bind:tap="init">
+<view class="container" >
   <view class="usermotto">
     <text class="user-motto" decode="true">Level: &nbsp;&nbsp;</text>
     <text class="user-motto" >{{motto}}</text>
   </view>
-  <view>
+  <view class="radiogroup">
       <view class="page-section-title"></view>
       <radio-group class="group" bindchange="radioChange">
         <view  wx:for="{{radioItems}}">
           <radio class="label" id="{{item.name}}" value="{{item.name}}" checked="{{item.checked}}"></radio>
-          <label class="label" for="{{item.name}}"><text>{{item.name}}</text></label>
+          <label class="label" key="{{item.name}}"><text>{{translator[item.name]}}</text></label>
         </view>
       </radio-group>
   </view>
   <view class="timeinput">
-    <text>Measure time interval (ms)</text>
-    <input class="timeinputbox"  maxlength="5" bindinput="bindKeyInput" type="number" placeholder="default 5000(2000~99999)"/>
+    <text>{{translator["Measure time interval (ms)"]}}</text>
+    <input class="timeinputbox"  maxlength="4" bindinput="bindKeyInput" type="number" placeholder="default 5000 (3000~9999)"/>
   </view>
   <view class="btn">
-    <button class="button" type="primary"  bind:tap="soundmeter">{{button1}}</button>
-    <button class="button" type="primary" bind:tap="export">{{button2}}</button>
+    <button class="button" type="primary"  bind:tap="soundmeter">{{translator[button1]}}</button>
+    <button class="button" type="primary" bind:tap="export">{{translator[button2]}}</button>
   </view>
 </view>

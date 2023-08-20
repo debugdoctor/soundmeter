@@ -10,15 +10,17 @@
   text-align: center;
 }
 
-.ckb{
+.group{
   display: flex;
   flex-direction: column;
   text-align:start;
   margin-top: 10px;
+  align-items:flex-start;
+  
 }
 
-.ckbbox{
-  margin: 10px;
+.label{
+  margin: 5px;
 }
 
 .btn{
@@ -30,12 +32,16 @@
 }
 
 .timeinput{
-  padding-top:20px ;
+  padding-top:30px ;
+  width: 60vw;
+  display: flex;
+  flex-direction:column;
   
 }
 
 .timeinputbox{
-  border-width: 5px;
+  width: 100%;
+  border-bottom: 2px solid grey;
 }
 
 .button{
